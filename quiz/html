@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Game Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 30px;
+    }
+
+    .quiz-container {
+      background: #ffffff;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .question {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    button {
+      background-color: #3498db;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2>Quiz Game</h2>
+  <div id="quiz">
+    <div class="question" id="question">Loading question...</div>
+    <div class="options" id="options"></div>
+    <button onclick="nextQuestion()">Next</button>
+  </div>
+  <div id="result" class="result" style="display:none;"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "What is the capital of India?",
+      options: ["New Delhi", "Mumbai", "Kolkata", "Chennai"],
+      answer: "New Delhi"
+    },
+    {
+      question: "Which language is used for web development?",
+      options: ["Python", "C++", "Java", "HTML"],
+      answer: "HTML"
+    },
+    {
+      question: "2 + 2 equals?",
+      options: ["3", "4", "5", "2"],
+      answer: "4"
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const q = quizData[currentQuestion];
+    document.getElementById("question").textContent = `Q${currentQuestion + 1}: ${q.question}`;
+    const optionsContainer = document.getElementById("options");
+    optionsContainer.innerHTML = "";
+
+    q.options.forEach(opt => {
+      const label = document.createElement("label");
+      label.innerHTML = `<input type="radio" name="option" value="${opt}"> ${opt}`;
+      optionsContainer.appendChild(label);
+    });
+  }
+
+  function nextQuestion() {
+    const selected = document.querySelector('input[name="option"]:checked');
+    if (!selected) {
+      alert("Please select an answer.");
+      return;
+    }
+
+    if (selected.value === quizData[currentQuestion].answer) {
+      score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+      loadQuestion();
+    } else {
+      document.getElementById("quiz").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").innerHTML = `Quiz Completed!<br>Your Score: ${score} / ${quizData.length}`;
+    }
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
