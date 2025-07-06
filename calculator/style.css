@@ -1,0 +1,162 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Soft, Colorful Animated Background with multiple gradients */
+    background:
+        /* Top-left to bottom-right soft blue-purple gradient */
+        linear-gradient(135deg, hwb(262 6% 20%), lab(62.63% 52.65 61.91)),
+        /* Bottom-left to top-right soft teal-green gradient */
+        linear-gradient(-45deg, #00c6ff, #fedc92);
+    background-size: 400% 400%, 400% 400%; /* Make gradients much larger for expansive animation */
+    background-position: 0% 50%, 100% 50%; /* Initial positions */
+    animation: backgroundShift 25s ease infinite alternate,
+               backgroundHueRotate 15s linear infinite; /* Two animations for subtle complexity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Prevents scrollbars from the large animated background */
+}
+
+/* Keyframe animation for the main background shift */
+@keyframes backgroundShift {
+    0% {
+        background-position: 0% 50%, 100% 50%;
+    }
+    50% {
+        background-position: 100% 50%, 0% 50%;
+    }
+    100% {
+        background-position: 0% 50%, 100% 50%;
+    }
+}
+
+/* Additional keyframe animation for a subtle hue rotation on the background */
+@keyframes backgroundHueRotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+.calculator {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 80px);
+    /* Glassmorphism Effect with a DARK transparent background */
+    background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent black */
+    backdrop-filter: blur(25px) saturate(150%); /* Stronger blur for depth */
+    -webkit-backdrop-filter: blur(25px) saturate(150%); /* For Safari */
+    border-radius: 25px; /* Even more rounded for a softer, modern look */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Very subtle light border */
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5); /* Deeper, more diffused shadow */
+    overflow: hidden; /* Ensures content respects border-radius */
+    transform: scale(0.95); /* Slightly smaller initial scale */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+}
+
+.calculator:hover {
+    transform: scale(1.02); /* Slight pop when hovering over the calculator */
+    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.6); /* Enhanced shadow on hover */
+}
+
+/* Animations for all buttons */
+.calculator > button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: none;
+    outline: none;
+    /* Button background for glassmorphism - dark transparent */
+    background-color: rgba(255, 255, 255, 0.1); /* Very subtle transparent white for numbers */
+    color: white; /* Default text color for buttons */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); /* Subtle text shadow for readability */
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-radius: 15px; /* Nicely rounded buttons */
+    margin: 5px; /* Larger gap between buttons for visual separation */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Hover effect for buttons */
+.calculator > button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly more opaque on hover */
+    transform: scale(1.1); /* More pronounced zoom effect */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); /* Stronger glow */
+    z-index: 2;
+}
+
+/* Active (click) effect for buttons */
+.calculator > button:active {
+    transform: scale(0.9); /* Deeper press-in effect */
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.6); /* Stronger inner shadow for depth */
+    background-color: rgba(255, 255, 255, 0.05); /* Even more transparent on active */
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.display {
+    grid-column: 1 / -1;
+    /* Display background for glassmorphism - slightly darker blur */
+    background: rgba(0, 0, 0, 0.4); /* Darker transparent for display */
+    backdrop-filter: blur(18px); /* Slightly less blur than calculator body */
+    -webkit-backdrop-filter: blur(18px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 25px 20px; /* More padding for a spacious feel */
+    word-wrap: break-word;
+    word-break: break-all;
+    border-top-left-radius: 25px; /* Match calculator border-radius */
+    border-top-right-radius: 25px; /* Match calculator border-radius */
+    box-shadow: inset 0 8px 25px rgba(0, 0, 0, 0.5); /* Stronger inner shadow for display depth */
+    color: white; /* Ensure text is visible */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6); /* Stronger text shadow for readability */
+}
+
+.display .previous-operand {
+    color: rgba(255, 255, 255, .85); /* Brighter previous text */
+    font-size: 1.9rem; /* Larger previous text */
+}
+
+.display .current-operand {
+    color: white;
+    font-size: 3.8rem; /* Larger current text for prominence */
+    font-weight: bold;
+    letter-spacing: 2px; /* More letter spacing */
+}
+
+/* Styling for operation and equals buttons - adjusted for glassmorphism */
+.operation, .equals {
+    background-color: rgba(255, 140, 0, 0.3) !important; /* Orange with more transparency */
+    color: white;
+    font-weight: bold;
+}
+
+.operation:hover, .equals:hover {
+    background-color: rgba(255, 165, 0, 0.5) !important; /* Lighter orange on hover */
+    box-shadow: 0 0 30px rgba(255, 140, 0, 0.8); /* Stronger orange glow */
+}
+
+.operation:active, .equals:active {
+    background-color: rgba(204, 112, 0, 0.2) !important; /* Darker orange on active */
+}
+
+/* Styling for clear and delete buttons - adjusted for glassmorphism */
+.clear, .delete {
+    background-color: rgba(127, 140, 141, 0.3) !important; /* Gray with more transparency */
+    color: white;
+    font-weight: bold;
+}
+
+.clear:hover, .delete:hover {
+    background-color: rgba(149, 165, 166, 0.5) !important; /* Lighter gray on hover */
+    box-shadow: 0 0 25px rgba(127, 140, 141, 0.6); /* Gray glow */
+}
+
+.clear:active, .delete:active {
+    background-color: rgba(98, 110, 111, 0.2) !important; /* Darker gray on active */
+}
